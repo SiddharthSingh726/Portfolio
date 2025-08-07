@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siddhart Singh - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(2deg); }
+            66% { transform: translateY(-10px) rotate(-1deg); }
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .card-hover:hover::before {
+            left: 100%;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+        }
+        
+        .skill-bar {
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .typing-animation {
+            border-right: 3px solid #667eea;
+            animation: blink 1s infinite, colorChange 3s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-color: transparent; }
+            51%, 100% { border-color: #667eea; }
+        }
+        
+        @keyframes colorChange {
+            0%, 100% { border-color: #667eea; }
+            33% { border-color: #764ba2; }
+            66% { border-color: #f093fb; }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .project-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        
+        .project-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        @keyframes modalSlideIn {
+            from { transform: scale(0.7) translateY(50px); opacity: 0; }
+            to { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        
+        .contact-form {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+        }
+        
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .glowing-border {
+            position: relative;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            padding: 2px;
+            border-radius: 50%;
+        }
+        
+        .glowing-border::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+            filter: blur(10px);
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            from { text-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
+            to { text-shadow: 0 0 30px rgba(102, 126, 234, 0.8), 0 0 40px rgba(118, 75, 162, 0.6); }
+        }
+        
+        .pulse-ring {
+            position: absolute;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: pulseRing 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        
+        @keyframes pulseRing {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+        
+        .magnetic {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            background: rgba(17, 24, 39, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        .tech-icon {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tech-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 10px 20px rgba(102, 126, 234, 0.4));
+        }
+        
+        .project-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .project-card:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            background: linear-gradient(145deg, #374151, #1f2937);
+        }
+        
+        .social-icon {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .loading-dots {
+            display: inline-block;
+        }
+        
+        .loading-dots::after {
+            content: '';
+            animation: dots 2s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+        
+        /* Living Background Elements */
+        .living-creature {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .butterfly {
+            animation: butterflyFly 15s infinite linear;
+        }
+        
+        @keyframes butterflyFly {
+            0% { 
+                transform: translateX(-100px) translateY(50vh) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            50% { 
+                transform: translateX(50vw) translateY(20vh) rotate(180deg) scale(1.2);
+                opacity: 0.8;
+            }
+            90% { opacity: 0.7; }
+            100% { 
+                transform: translateX(calc(100vw + 100px)) translateY(80vh) rotate(360deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+        
+        .fish {
+            animation: fishSwim 20s infinite linear;
+        }
+        
+        @keyframes fishSwim {
+            0% { 
+                transform: translateX(-100px) translateY(30vh) scaleX(1);
+                opacity: 0;
+            }
+            5% { opacity: 0.6; }
+            25% { 
+                transform: translateX(25vw) translateY(60vh) scaleX(1);
+            }
+            50% { 
+                transform: translateX(50vw) translateY(40vh) scaleX(-1);
+            }
+            75% { 
+                transform: translateX(75vw) translateY(70vh) scaleX(-1);
+            }
+            95% { opacity: 0.6; }
+            100% { 
+                transform: translateX(calc(100vw + 100px)) translateY(20vh) scaleX(-1);
+                opacity: 0;
+            }
+        }
+        
+        .bird {
+            animation: birdFly 12s infinite linear;
+        }
+        
+        @keyframes birdFly {
+            0% { 
+                transform: translateX(calc(100vw + 100px)) translateY(10vh) scaleX(-1);
+                opacity: 0;
+            }
+            10% { opacity: 0.5; }
+            50% { 
+                transform: translateX(50vw) translateY(30vh) scaleX(-1);
+                opacity: 0.7;
+            }
+            90% { opacity: 0.5; }
+            100% { 
+                transform: translateX(-100px) translateY(50vh) scaleX(-1);
+                opacity: 0;
+            }
+        }
+        
+        .jellyfish {
+            animation: jellyfishFloat 18s infinite ease-in-out;
+        }
+        
+        @keyframes jellyfishFloat {
+            0%, 100% { 
+                transform: translateX(10vw) translateY(80vh) rotate(0deg);
+                opacity: 0.4;
+            }
+            25% { 
+                transform: translateX(30vw) translateY(20vh) rotate(90deg);
+                opacity: 0.7;
+            }
+            50% { 
+                transform: translateX(70vw) translateY(60vh) rotate(180deg);
+                opacity: 0.6;
+            }
+            75% { 
+                transform: translateX(90vw) translateY(40vh) rotate(270deg);
+                opacity: 0.5;
+            }
+        }
+        
+        .firefly {
+            animation: fireflyGlow 8s infinite ease-in-out;
+        }
+        
+        @keyframes fireflyGlow {
+            0%, 100% { 
+                transform: translateX(20vw) translateY(70vh);
+                opacity: 0.3;
+                filter: brightness(1);
+            }
+            25% { 
+                transform: translateX(80vw) translateY(30vh);
+                opacity: 0.8;
+                filter: brightness(2);
+            }
+            50% { 
+                transform: translateX(60vw) translateY(80vh);
+                opacity: 0.6;
+                filter: brightness(1.5);
+            }
+            75% { 
+                transform: translateX(40vw) translateY(20vh);
+                opacity: 0.9;
+                filter: brightness(2.2);
+            }
+        }
+        
+        .dragonfly {
+            animation: dragonflyDance 14s infinite linear;
+        }
+        
+        @keyframes dragonflyDance {
+            0% { 
+                transform: translateX(-50px) translateY(40vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            30% { 
+                transform: translateX(30vw) translateY(20vh) rotate(45deg);
+            }
+            60% { 
+                transform: translateX(70vw) translateY(70vh) rotate(-45deg);
+            }
+            90% { opacity: 0.6; }
+            100% { 
+                transform: translateX(calc(100vw + 50px)) translateY(50vh) rotate(0deg);
+                opacity: 0;
+            }
+        }
+        
+        .bee {
+            animation: beeZigzag 10s infinite linear;
+        }
+        
+        @keyframes beeZigzag {
+            0% { 
+                transform: translateX(-80px) translateY(60vh);
+                opacity: 0;
+            }
+            10% { opacity: 0.7; }
+            20% { transform: translateX(20vw) translateY(40vh); }
+            40% { transform: translateX(40vw) translateY(80vh); }
+            60% { transform: translateX(60vw) translateY(30vh); }
+            80% { transform: translateX(80vw) translateY(70vh); }
+            90% { opacity: 0.7; }
+            100% { 
+                transform: translateX(calc(100vw + 80px)) translateY(50vh);
+                opacity: 0;
+            }
+        }
+        
+        .whale {
+            animation: whaleSwim 25s infinite linear;
+        }
+        
+        @keyframes whaleSwim {
+            0% { 
+                transform: translateX(-200px) translateY(60vh) scaleX(1);
+                opacity: 0;
+            }
+            5% { opacity: 0.4; }
+            50% { 
+                transform: translateX(50vw) translateY(40vh) scaleX(1);
+                opacity: 0.6;
+            }
+            95% { opacity: 0.4; }
+            100% { 
+                transform: translateX(calc(100vw + 200px)) translateY(70vh) scaleX(1);
+                opacity: 0;
+            }
+        }
+        
+        .octopus {
+            animation: octopusDrift 22s infinite ease-in-out;
+        }
+        
+        @keyframes octopusDrift {
+            0%, 100% { 
+                transform: translateX(5vw) translateY(90vh) rotate(0deg);
+                opacity: 0.3;
+            }
+            33% { 
+                transform: translateX(95vw) translateY(30vh) rotate(120deg);
+                opacity: 0.6;
+            }
+            66% { 
+                transform: translateX(50vw) translateY(70vh) rotate(240deg);
+                opacity: 0.5;
+            }
+        }
+        
+        .living-bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white overflow-x-hidden">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+    
+    <!-- Floating Particles -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0"></div>
+    
+    <!-- Living Background Creatures -->
+    <div id="living-creatures" class="living-bg-overlay"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full nav-blur z-50 transition-all duration-500" id="navbar">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-glow magnetic">SS</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-purple-400 transition-all duration-300 magnetic cursor-pointer relative group">
+                        Home
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#about" class="hover:text-purple-400 transition-all duration-300 magnetic cursor-pointer relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#skills" class="hover:text-purple-400 transition-all duration-300 magnetic cursor-pointer relative group">
+                        Skills
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#projects" class="hover:text-purple-400 transition-all duration-300 magnetic cursor-pointer relative group">
+                        Projects
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="hover:text-purple-400 transition-all duration-300 magnetic cursor-pointer relative group">
+                        Contact
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+                <button class="md:hidden magnetic" id="mobile-menu-btn">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen gradient-bg flex items-center justify-center relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-20 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse floating"></div>
+            <div class="absolute top-40 right-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse floating" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-20 left-40 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse floating" style="animation-delay: 4s;"></div>
+        </div>
+        
+        <div class="text-center z-10 px-6">
+            <div class="mb-8 relative">
+                <div class="glowing-border w-36 h-36 mx-auto mb-6 relative">
+                    <img src="https://github.com/SiddharthSingh726/Portfolio/blob/main/images/Screenshot%202025-08-05%20223035.png?raw=true" alt="Siddhart Singh" class="w-full h-full rounded-full object-cover">
+                    <div class="pulse-ring w-36 h-36"></div>
+                    <div class="pulse-ring w-36 h-36" style="animation-delay: 1s;"></div>
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in">
+                Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 text-glow">Siddhart Singh</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 typing-animation fade-in" id="typing-text" style="animation-delay: 0.5s;">Computer Science Student</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 1s;">
+                <button onclick="scrollToSection('projects')" class="px-8 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 magnetic shadow-lg hover:shadow-xl">
+                    View My Work ✨
+                </button>
+                <button onclick="scrollToSection('contact')" class="px-8 py-3 border-2 border-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-all transform hover:scale-105 magnetic shadow-lg hover:shadow-xl">
+                    Get In Touch 🚀
+                </button>
+            </div>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-800 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-4 text-glow">About Me</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="slide-in-left">
+                    <div class="relative">
+                        <img src="https://github.com/SiddharthSingh726/Portfolio/blob/main/images/IMG-20230301-WA0040.png?raw=true" alt="Siddhart Singh" class="w-80 h-80 mx-auto rounded-2xl object-cover transform rotate-3 hover:rotate-0 transition-all duration-500 shadow-2xl floating">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-purple-400 to-pink-400 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-500"></div>
+                    </div>
+                </div>
+                
+                <div class="slide-in-right">
+                    <h3 class="text-2xl font-semibold mb-6 text-glow">Final Year Computer Science Student</h3>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Passionate about software development with a strong foundation in Java, Spring Boot, and modern web technologies like React, Hibernate and Docker. 
+                        I love creating innovative solutions and turning complex problems into elegant, user-friendly applications.
+                    </p>
+                    <p class="text-gray-300 mb-8 leading-relaxed">
+                        Currently seeking opportunities to apply my skills in a dynamic tech environment where I can contribute to meaningful projects 
+                        and continue growing as a developer.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl card-hover border border-gray-600">
+                            <div class="text-4xl font-bold text-purple-400 mb-2 counter" data-target="2">0</div>
+                            <div class="text-sm text-gray-300">Projects Completed</div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl card-hover border border-gray-600">
+                            <div class="text-4xl font-bold text-purple-400 mb-2 counter" data-target="8.6">0</div>
+                            <div class="text-sm text-gray-300">GPA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-gray-900 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-4 text-glow">Skills & Technologies</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="slide-in-left">
+                    <h3 class="text-2xl font-semibold mb-8 text-glow">Technical Skills</h3>
+                    <div class="space-y-6">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="font-medium">JavaScript / TypeScript</span>
+                                <span class="text-purple-400 font-bold">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="skill-bar bg-gradient-to-r from-purple-400 to-pink-400 h-4 rounded-full" style="width: 0%" data-width="90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="font-medium">React / Next.js</span>
+                                <span class="text-purple-400 font-bold">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="skill-bar bg-gradient-to-r from-purple-400 to-pink-400 h-4 rounded-full" style="width: 0%" data-width="85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="font-medium">Java</span>
+                                <span class="text-purple-400 font-bold">88%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="skill-bar bg-gradient-to-r from-purple-400 to-pink-400 h-4 rounded-full" style="width: 0%" data-width="88%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="font-medium">Spring Boot / REST API</span>
+                                <span class="text-purple-400 font-bold">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="skill-bar bg-gradient-to-r from-purple-400 to-pink-400 h-4 rounded-full" style="width: 0%" data-width="80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="font-medium">Spring IOC / Dependency Injection</span>
+                                <span class="text-purple-400 font-bold">75%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="skill-bar bg-gradient-to-r from-purple-400 to-pink-400 h-4 rounded-full" style="width: 0%" data-width="75%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-3">
+                                <span class="font-medium">JPA / Hibernate</span>
+                                <span class="text-purple-400 font-bold">78%</span>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                                <div class="skill-bar bg-gradient-to-r from-purple-400 to-pink-400 h-4 rounded-full" style="width: 0%" data-width="78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slide-in-right">
+                    <h3 class="text-2xl font-semibold mb-8 text-glow">Tools & Frameworks</h3>
+                    <div class="grid grid-cols-3 gap-4">
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl tech-icon border border-gray-700">
+                            <div class="text-4xl mb-3">⚛️</div>
+                            <div class="text-sm font-medium">React</div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl tech-icon border border-gray-700">
+                            <div class="text-4xl mb-3">☕</div>
+                            <div class="text-sm font-medium">Java</div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl tech-icon border border-gray-700">
+                            <div class="text-4xl mb-3">🍃</div>
+                            <div class="text-sm font-medium">Spring Boot</div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl tech-icon border border-gray-700">
+                            <div class="text-4xl mb-3">🗄️</div>
+                            <div class="text-sm font-medium">Hibernate</div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl tech-icon border border-gray-700">
+                            <div class="text-4xl mb-3">🐙</div>
+                            <div class="text-sm font-medium">Git</div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl tech-icon border border-gray-700">
+                            <div class="text-4xl mb-3">💾</div>
+                            <div class="text-sm font-medium">JDBC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-800 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-4 text-glow">Featured Projects</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card-hover project-card rounded-xl overflow-hidden fade-in">
+                    <div class="h-48 bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 flex items-center justify-center text-5xl relative overflow-hidden">
+                        🚀
+                        <div class="absolute inset-0 bg-black opacity-0 hover:opacity-20 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3 text-glow">Ultimate Smart Device Dashboard</h3>
+                        <p class="text-gray-300 mb-4 leading-relaxed">A responsive web application built with HTML, CSS, and JavaScript that displays real-time device battery level, location-based weather data, and historical weather trends. Features include dark/light mode toggle, animated backgrounds, dynamic weather icons, offline support via Progressive Web App (PWA) integration, and local storage caching for enhanced performance.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full text-xs font-medium">HTML</span>
+                            <span class="px-3 py-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full text-xs font-medium">CSS</span>
+                            <span class="px-3 py-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full text-xs font-medium">JavaScript</span>
+                            <span class="px-3 py-1 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full text-xs font-medium">Tailwind CSS</span>
+                        </div>
+                        <button onclick="openProjectModal('ecommerce')" class="w-full py-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg font-semibold hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            View Details ✨
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card-hover project-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.2s;">
+                    <div class="h-48 bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 flex items-center justify-center text-5xl relative overflow-hidden">
+                        ⚖️
+                        <div class="absolute inset-0 bg-black opacity-0 hover:opacity-20 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3 text-glow">ML Legal Advisor</h3>
+                        <p class="text-gray-300 mb-4 leading-relaxed">Intelligent chatbot using natural language processing and machine learning. Built with Python and deployed on Streamlit.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full text-xs font-medium">Python</span>
+                            <span class="px-3 py-1 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full text-xs font-medium">MongoDB</span>
+                            <span class="px-3 py-1 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full text-xs font-medium">Docker</span>
+                        </div>
+                        <button onclick="openProjectModal('chatbot')" class="w-full py-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-lg font-semibold hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            View Details 🚀
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card-hover project-card rounded-xl overflow-hidden fade-in" style="animation-delay: 0.4s;">
+                    <div class="h-48 bg-gradient-to-br from-green-400 via-blue-400 to-purple-400 flex items-center justify-center text-5xl relative overflow-hidden">
+                        📱
+                        <div class="absolute inset-0 bg-black opacity-0 hover:opacity-20 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3 text-glow">Task Management App</h3>
+                        <p class="text-gray-300 mb-4 leading-relaxed">Mobile-first task management application with real-time collaboration features. Built with React Native and Firebase.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-gradient-to-r from-green-600 to-green-700 rounded-full text-xs font-medium">React Native</span>
+                            <span class="px-3 py-1 bg-gradient-to-r from-green-600 to-green-700 rounded-full text-xs font-medium">Firebase</span>
+                            <span class="px-3 py-1 bg-gradient-to-r from-green-600 to-green-700 rounded-full text-xs font-medium">Redux</span>
+                        </div>
+                        <button onclick="openProjectModal('taskapp')" class="w-full py-3 bg-gradient-to-r from-green-400 to-blue-400 rounded-lg font-semibold hover:opacity-90 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            View Details 💫
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 gradient-bg relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-4 text-glow">Let's Connect</h2>
+                <div class="w-20 h-1 bg-white mx-auto mb-6"></div>
+                <p class="text-xl opacity-90">Ready to start your next project? Let's work together! ✨</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="slide-in-left">
+                    <h3 class="text-2xl font-semibold mb-6 text-glow">Get In Touch</h3>
+                    <div class="space-y-6 mb-8">
+                        <div class="flex items-center space-x-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 card-hover">
+                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">
+                                📧
+                            </div>
+                            <div>
+                                <div class="font-semibold">Email</div>
+                                <div class="opacity-80">siddharthsingh21122002@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 card-hover">
+                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">
+                                📱
+                            </div>
+                            <div>
+                                <div class="font-semibold">Phone</div>
+                                <div class="opacity-80">7619026359</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 p-4 bg-white/10 rounded-xl backdrop-blur-sm border border-white/20 card-hover">
+                            <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">
+                                📍
+                            </div>
+                            <div>
+                                <div class="font-semibold">Location</div>
+                                <div class="opacity-80">India, Delhi</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all text-2xl border border-white/30">
+                            💼
+                        </a>
+                        <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all text-2xl border border-white/30">
+                            🐙
+                        </a>
+                        <a href="#" class="social-icon w-14 h-14 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/30 transition-all text-2xl border border-white/30">
+                            🐦
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="slide-in-right">
+                    <form class="contact-form p-8 rounded-xl" id="contact-form">
+                    </form>
+                    <form 
+  action="https://formspree.io/f/mnnzgwgd" 
+  method="POST" 
+  class="contact-form p-8 rounded-xl"
+>
+  <div class="mb-6">
+    <label class="block text-sm font-semibold mb-3">Name</label>
+    <input 
+      type="text" 
+      name="name" 
+      class="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 transition-all focus:bg-white/20" 
+      placeholder="Your Name" 
+      required
+    >
+  </div>
+
+  <div class="mb-6">
+    <label class="block text-sm font-semibold mb-3">Email</label>
+    <input 
+      type="email" 
+      name="email" 
+      class="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 transition-all focus:bg-white/20" 
+      placeholder="your@email.com" 
+      required
+    >
+  </div>
+
+  <div class="mb-8">
+    <label class="block text-sm font-semibold mb-3">Message</label>
+    <textarea 
+      name="message" 
+      rows="4" 
+      class="w-full px-4 py-4 bg-white/10 border border-white/20 rounded-lg focus:outline-none focus:border-white/40 transition-all resize-none focus:bg-white/20" 
+      placeholder="Your message..." 
+      required
+    ></textarea>
+  </div>
+
+  <button 
+    type="submit" 
+    class="w-full py-4 bg-white text-gray-900 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+  >
+    Send Message 🚀
+  </button>
+</form>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modals -->
+    <div id="project-modal" class="project-modal">
+        <div class="modal-content bg-gray-900 rounded-xl max-w-2xl mx-4 p-8 relative border border-gray-700 shadow-2xl">
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 text-3xl hover:text-purple-400 transition-colors magnetic">×</button>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-8 text-center border-t border-gray-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <p class="text-gray-400">© 2024 Siddhart Singh. Built with passion and lots of coffee ☕ <span class="loading-dots"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Particles Animation
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Living Creatures Animation
+        function createLivingCreatures() {
+            const container = document.getElementById('living-creatures');
+            
+            const creatures = [
+                { emoji: '🦋', class: 'butterfly', count: 3 },
+                { emoji: '🐠', class: 'fish', count: 2 },
+                { emoji: '🐦', class: 'bird', count: 2 },
+                { emoji: '🪼', class: 'jellyfish', count: 1 },
+                { emoji: '✨', class: 'firefly', count: 4 },
+                { emoji: '🐉', class: 'dragonfly', count: 2 },
+                { emoji: '🐝', class: 'bee', count: 2 },
+                { emoji: '🐋', class: 'whale', count: 1 },
+                { emoji: '🐙', class: 'octopus', count: 1 }
+            ];
+            
+            creatures.forEach(creature => {
+                for (let i = 0; i < creature.count; i++) {
+                    const element = document.createElement('div');
+                    element.className = `living-creature ${creature.class}`;
+                    element.textContent = creature.emoji;
+                    element.style.animationDelay = Math.random() * 10 + 's';
+                    
+                    // Add some variation to the animation duration
+                    const baseDuration = parseFloat(getComputedStyle(document.documentElement).getPropertyValue(`--${creature.class}-duration`) || '15s');
+                    const variation = (Math.random() - 0.5) * 0.4; // ±20% variation
+                    element.style.animationDuration = (baseDuration * (1 + variation)) + 's';
+                    
+                    container.appendChild(element);
+                }
+            });
+            
+            // Add some special rare creatures that appear occasionally
+            setTimeout(() => {
+                addRareCreatures();
+            }, 5000);
+        }
+        
+        function addRareCreatures() {
+            const container = document.getElementById('living-creatures');
+            const rareCreatures = [
+                { emoji: '🦅', class: 'bird', probability: 0.3 },
+                { emoji: '🐬', class: 'fish', probability: 0.2 },
+                { emoji: '🦜', class: 'bird', probability: 0.25 },
+                { emoji: '🐢', class: 'fish', probability: 0.15 },
+                { emoji: '🦋', class: 'butterfly', probability: 0.4 }
+            ];
+            
+            rareCreatures.forEach(creature => {
+                if (Math.random() < creature.probability) {
+                    const element = document.createElement('div');
+                    element.className = `living-creature ${creature.class}`;
+                    element.textContent = creature.emoji;
+                    element.style.animationDelay = Math.random() * 15 + 's';
+                    element.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+                    container.appendChild(element);
+                }
+            });
+            
+            // Repeat every 30 seconds
+            setTimeout(addRareCreatures, 30000);
+        }
+        
+        // Add interactive creature spawning on scroll
+        let lastScrollY = 0;
+        function handleCreatureSpawning() {
+            const currentScrollY = window.scrollY;
+            const scrollDelta = Math.abs(currentScrollY - lastScrollY);
+            
+            // Spawn creatures based on scroll activity
+            if (scrollDelta > 100) {
+                spawnScrollCreature();
+                lastScrollY = currentScrollY;
+            }
+        }
+        
+        function spawnScrollCreature() {
+            const container = document.getElementById('living-creatures');
+            const scrollCreatures = ['🌟', '✨', '💫', '🌙', '☄️'];
+            
+            const element = document.createElement('div');
+            element.className = 'living-creature firefly';
+            element.textContent = scrollCreatures[Math.floor(Math.random() * scrollCreatures.length)];
+            element.style.left = Math.random() * 100 + 'vw';
+            element.style.top = Math.random() * 100 + 'vh';
+            element.style.fontSize = '1.5rem';
+            element.style.animationDuration = '3s';
+            
+            container.appendChild(element);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (element.parentNode) {
+                    element.parentNode.removeChild(element);
+                }
+            }, 3000);
+        }
+
+        // Scroll Progress Indicator
+        function updateScrollProgress() {
+            const scrollProgress = document.getElementById('scroll-indicator');
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
+        }
+
+        // Magnetic Effect for Interactive Elements
+        function addMagneticEffect() {
+            const magneticElements = document.querySelectorAll('.magnetic');
+            
+            magneticElements.forEach(element => {
+                element.addEventListener('mousemove', (e) => {
+                    const rect = element.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    element.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
+                });
+                
+                element.addEventListener('mouseleave', () => {
+                    element.style.transform = 'translate(0, 0)';
+                });
+            });
+        }
+
+        // Counter Animation
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            
+            counters.forEach(counter => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = target % 1 === 0 ? Math.ceil(current) : current.toFixed(1);
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        counter.textContent = target % 1 === 0 ? target : target.toFixed(1);
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Enhanced Typing Animation
+        const typingText = document.getElementById('typing-text');
+        const texts = [
+            'Computer Science Student 🎓',
+            'Java Backend Developer 💻',
+            'Java Spring Boot Expert ☕',
+            'Problem Solver 🧩',
+            'Tech Enthusiast 🚀'
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeWriter() {
+            const currentText = texts[textIndex];
+            
+            if (isDeleting) {
+                typingText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            if (!isDeleting && charIndex === currentText.length) {
+                setTimeout(() => isDeleting = true, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+            }
+
+            setTimeout(typeWriter, isDeleting ? 50 : 100);
+        }
+
+        // Smooth scrolling with easing
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            const offsetTop = element.offsetTop - 80;
+            
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+
+        // Enhanced Navigation
+        document.querySelectorAll('nav a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                scrollToSection(targetId);
+            });
+        });
+
+        // Enhanced Intersection Observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger counter animation for about section
+                    if (entry.target.closest('#about')) {
+                        setTimeout(animateCounters, 500);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced Skill Bars Animation
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillBars = entry.target.querySelectorAll('.skill-bar');
+                    skillBars.forEach((bar, index) => {
+                        setTimeout(() => {
+                            bar.style.width = bar.getAttribute('data-width');
+                        }, index * 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            skillObserver.observe(skillsSection);
+        }
+
+        // Enhanced Project Modal
+        const projectData = {
+            ecommerce: {
+                title: 'Ultimate Smart Device Dashboard 🚀',
+                description: 'A comprehensive smart device dashboard built from scratch using modern web technologies. Features include real-time battery monitoring, live location-based weather data, historical weather charts, dark/light mode, offline support (PWA), local storage, animated backgrounds, and a mobile-responsive design.',
+                features: [
+                    '🌐 Real-time Device Battery Level',
+                    '🌦️ Location-Based Weather Data',
+                    '📶 Battery Status Monitoring',
+                    '💾 Local Storage Integration',
+                    '🌙 Dark/Light Mode Toggle',
+                    '📱 Mobile-Responsive Grid Layout',
+                    '📲 PWA (Progressive Web App) Support'
+                ],
+                tech: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS'],
+                github: 'https://github.com/SiddharthSingh726/Ultimate-Smart-Device-Dashboard',
+                demo: 'https://siddharthsingh726.github.io/Ultimate-Smart-Device-Dashboard/'
+            },
+            chatbot: {
+                title: 'ML Legal Advisor ⚖️',
+                description: 'An intelligent chatbot powered by natural language processing and machine learning. The bot can understand context, provide relevant responses, and learn from interactions to improve over time.',
+                features: [
+                    '🧠 Natural Language Processing',
+                    '💬 Context-Aware Responses',
+                    '🤖 Machine Learning Integration',
+                    '🌍 Multi-language Support',
+                    '📝 Conversation History',
+                    '📊 Admin Analytics Dashboard',
+                    '🔌 API Integration'
+                ],
+                tech: ['Python', 'MongoDB', 'Docker'],
+                github: 'https://github.com/SiddharthSingh726/ml-legal-advisor',
+                demo: 'https://ml-legal-advisor-txsrqscpcygm5mjxayxzgd.streamlit.app/'
+            },
+            taskapp: {
+                title: 'Task Management App 📱',
+                description: 'A mobile-first task management application with real-time collaboration features. Users can create projects, assign tasks, track progress, and collaborate with team members in real-time.',
+                features: [
+                    '👥 Real-time Collaboration',
+                    '📋 Project & Task Management',
+                    '📈 Progress Tracking',
+                    '💬 Team Communication',
+                    '📎 File Attachments',
+                    '⏰ Deadline Notifications',
+                    '📱 Offline Support'
+                ],
+                tech: ['React Native', 'Firebase', 'Redux', 'Expo', 'Push Notifications', 'Cloud Storage'],
+                github: '#',
+                demo: '#'
+            }
+        };
+
+        function openProjectModal(projectId) {
+            const modal = document.getElementById('project-modal');
+            const content = document.getElementById('modal-content');
+            const project = projectData[projectId];
+
+            content.innerHTML = `
+                <h2 class="text-3xl font-bold mb-4 text-glow">${project.title}</h2>
+                <p class="text-gray-300 mb-6 leading-relaxed">${project.description}</p>
+                
+                <h3 class="text-xl font-semibold mb-3 text-glow">✨ Key Features</h3>
+                <ul class="list-none text-gray-300 mb-6 space-y-2">
+                    ${project.features.map(feature => `<li class="flex items-center"><span class="mr-2">•</span>${feature}</li>`).join('')}
+                </ul>
+                
+                <h3 class="text-xl font-semibold mb-3 text-glow">🛠️ Technologies Used</h3>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    ${project.tech.map(tech => `<span class="px-3 py-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-sm font-medium">${tech}</span>`).join('')}
+                </div>
+                
+                <div class="flex gap-4">
+                    <a href="${project.github}" class="px-6 py-3 bg-gradient-to-r from-gray-700 to-gray-800 rounded-lg hover:from-gray-600 hover:to-gray-700 transition-all transform hover:scale-105 font-medium">
+                        🐙 View Code
+                    </a>
+                    <a href="${project.demo}" class="px-6 py-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-lg hover:opacity-90 transition-all transform hover:scale-105 font-medium">
+                        🚀 Live Demo
+                    </a>
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Enhanced Contact Form
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const button = this.querySelector('button[type="submit"]');
+            const buttonText = button.querySelector('.button-text');
+            const originalText = buttonText.textContent;
+            
+            // Loading state
+            buttonText.innerHTML = 'Sending... <span class="loading-dots"></span>';
+            button.disabled = true;
+            
+            // Simulate sending
+            setTimeout(() => {
+                buttonText.textContent = 'Message Sent! ✅';
+                button.style.background = 'linear-gradient(45deg, #10B981, #059669)';
+                
+                setTimeout(() => {
+                    buttonText.textContent = originalText;
+                    button.style.background = '';
+                    button.disabled = false;
+                    this.reset();
+                }, 3000);
+            }, 2000);
+        });
+
+        // Mobile menu (enhanced)
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            // Create mobile menu overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-gray-900/95 backdrop-blur-sm z-50 flex items-center justify-center';
+            overlay.innerHTML = `
+                <div class="text-center">
+                    <div class="space-y-8">
+                        <a href="#home" class="block text-2xl font-semibold hover:text-purple-400 transition-colors">Home</a>
+                        <a href="#about" class="block text-2xl font-semibold hover:text-purple-400 transition-colors">About</a>
+                        <a href="#skills" class="block text-2xl font-semibold hover:text-purple-400 transition-colors">Skills</a>
+                        <a href="#projects" class="block text-2xl font-semibold hover:text-purple-400 transition-colors">Projects</a>
+                        <a href="#contact" class="block text-2xl font-semibold hover:text-purple-400 transition-colors">Contact</a>
+                    </div>
+                    <button class="mt-12 text-4xl hover:text-purple-400 transition-colors" onclick="this.parentElement.parentElement.remove()">×</button>
+                </div>
+            `;
+            
+            overlay.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    overlay.remove();
+                    const targetId = link.getAttribute('href').substring(1);
+                    scrollToSection(targetId);
+                });
+            });
+            
+            document.body.appendChild(overlay);
+        });
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            createLivingCreatures();
+            typeWriter();
+            addMagneticEffect();
+            
+            // Add scroll listeners
+            window.addEventListener('scroll', updateScrollProgress);
+            window.addEventListener('scroll', handleCreatureSpawning);
+            
+            // Enhanced navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 100) {
+                    navbar.classList.add('nav-blur');
+                } else {
+                    navbar.classList.remove('nav-blur');
+                }
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('project-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProjectModal();
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeProjectModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b32fc7c7995959',t:'MTc1NDUzMjA5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
